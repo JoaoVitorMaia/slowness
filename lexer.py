@@ -29,6 +29,7 @@ class TokenType(Enum):
     Less = 25
     Greater = 26
     NegationMark = 27
+    EOF = 28
 
 KEYWORDS = {
     'if': TokenType.If,
@@ -103,6 +104,8 @@ def tokenize(source:str):
                 print(f'Unrecognized character {src[0]}')
                 sys.exit()
 
+        
+    tokens.append(Token(value="", type=TokenType.EOF))
     return tokens
 
 with open('tst.vm', 'r') as file:

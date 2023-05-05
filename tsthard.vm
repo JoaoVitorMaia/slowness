@@ -1,0 +1,40 @@
+#set($r=1)
+$r
+
+#set($b=$request.getParameter("s"))
+$b
+
+#if ($foo)
+  ## do something
+#elseif ($bar)
+  ## do something else
+#else
+  ## do something different
+#end
+#set ($foo = "bar")
+#parse ("template.vm")
+#foreach ($item in $list)
+  ## do something
+  #if ($item.hasNext())
+    ## do something else
+  #end
+#end
+#macro (myMacro $param1 $param2)
+  ## macro body
+#end
+#stop
+#break
+#define ($myVar)
+  ## variable definition
+#end
+#evaluate ($myExpression)
+
+# References
+$foo
+$item.hasNext()
+
+# Operators
+1 + 2 - 3 * 4 / 5 % 6 < 7 > 8 <= 9 >= 10 == 11 != 12 && 13 || 14 !15
+
+# Literals
+123 45.67 "hello" true false

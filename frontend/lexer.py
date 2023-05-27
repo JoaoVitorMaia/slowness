@@ -30,7 +30,8 @@ class TokenType(Enum):
     Less = 25
     Greater = 26
     NegationMark = 27
-    EOF = 28
+    EOL = 28
+    EOF = 29
 
 
 KEYWORDS = {
@@ -88,6 +89,8 @@ def tokenize(source: str):
             tokens.append(Token(src.pop(0), TokenType.Quote))
         elif src[0] == '!':
             tokens.append(Token(src.pop(0), TokenType.NegationMark))
+        elif src[0] == '\n' and tokens[-1].type != TokenType.EOL:#multiplas linhas em branco nao importam
+            tokens.append(Token(src.pop(0), TokenType.EOL))
         else:
             # Lidar com tokens multicaracteres
             if src[0].isdigit():
@@ -113,7 +116,3 @@ def tokenize(source: str):
     tokens.append(Token(value="", type=TokenType.EOF))
     return tokens
 
-
-'''with open('tst.vm', 'r') as file:
-    for token in tokenize(file.read()):
-        print(token.__dict__)'''

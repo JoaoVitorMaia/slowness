@@ -1,16 +1,17 @@
 from enum import Enum
-import sys,time
+import sys
+
 
 class TokenType(Enum):
-    Number=1
-    Identifier=2
-    Equals=3
-    OpenParen=4
-    CloseParen=5
-    BinaryOperator=6
-    Hash=7
-    Set=8
-    Evaluate=9
+    Number = 1
+    Identifier = 2
+    Equals = 3
+    OpenParen = 4
+    CloseParen = 5
+    BinaryOperator = 6
+    Hash = 7
+    Set = 8
+    Evaluate = 9
     If = 10
     Elseif = 11
     Else = 12
@@ -31,6 +32,7 @@ class TokenType(Enum):
     NegationMark = 27
     EOF = 28
 
+
 KEYWORDS = {
     'if': TokenType.If,
     'elseif': TokenType.Elseif,
@@ -48,21 +50,25 @@ KEYWORDS = {
     'evaluate': TokenType.Evaluate,
 }
 
+
 class Token:
-    def __init__(self, value:str, type: TokenType):
+    def __init__(self, value: str, type: TokenType):
         self.value = value
         self.type = type
 
-def isskipable(user_string:str):
+
+def isskipable(user_string: str):
     return user_string == ' ' or user_string == '\n' or user_string == '\t'
+
 
 def iscomparisonoperator(user_string: str):
     return user_string == '<' or user_string == '>' or user_string == '!' or user_string == '='
 
-def tokenize(source:str):
+
+def tokenize(source: str):
     tokens = []
     src = list(source)
-    #construir cada token até o fim do arquivo
+    # construir cada token até o fim do arquivo
     while len(src) > 0:
         if src[0] == '(':
             tokens.append(Token(src.pop(0), TokenType.OpenParen))
@@ -86,13 +92,13 @@ def tokenize(source:str):
             # Lidar com tokens multicaracteres
             if src[0].isdigit():
                 num = ""
-                while(len(src)>0 and src[0].isdigit()):
-                    num+=src.pop(0)
+                while (len(src) > 0 and src[0].isdigit()):
+                    num += src.pop(0)
                 tokens.append(Token(num, TokenType.Number))
             elif src[0].isalpha():
-                ident=""
+                ident = ""
                 while len(src) > 0 and (src[0].isalpha() or src[0].isdigit()):
-                    ident+=src.pop(0)
+                    ident += src.pop(0)
                 if ident not in KEYWORDS:
                     tokens.append(Token(ident, TokenType.Identifier))
                 else:
@@ -104,10 +110,10 @@ def tokenize(source:str):
                 print(f'Unrecognized character {src[0]}')
                 sys.exit()
 
-        
     tokens.append(Token(value="", type=TokenType.EOF))
     return tokens
 
-with open('tst.vm', 'r') as file:
+
+'''with open('tst.vm', 'r') as file:
     for token in tokenize(file.read()):
-        print(token.__dict__)
+        print(token.__dict__)'''
